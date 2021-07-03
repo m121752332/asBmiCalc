@@ -49,7 +49,7 @@ public class ReportActivity extends AppCompatActivity {
             BMI = weight / (height*height);
 
             //結果
-            show_result.setText(getText(R.string.bmi_result) + nf.format(BMI));
+            show_result.setText(getText(R.string.bmi_result) +" "+ nf.format(BMI));
             //Toast.makeText(ReportActivity.this, "BMI:"+BMI, Toast.LENGTH_SHORT).show();
 
             //建議
@@ -62,7 +62,7 @@ public class ReportActivity extends AppCompatActivity {
         }
         catch(Exception e)
         {
-            Toast.makeText(this, "要先輸入身高體重喔!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getText(R.string.exception), Toast.LENGTH_SHORT).show();
         }
     }
 

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MyBMI</string>
+    <string name="bmi_hello">Hello! Try BMI Tool</string>
+    <string name="bmi_height">Height (cm)</string>
+    <string name="bmi_weight">Weight (kg)</string>
+    <string name="bmi_btn">Calc BMI</string>
+    <string name="bmi_result">Your BMI Value is </string>
+    <string name="press_setting">Press Setting</string>
+    <string name="thinking">What are you thinking about?</string>
+    <string name="advice_light">Eat more,too slim!</string>
+    <string name="advice_average">Good Body!</string>
+    <string name="advice_heavy">Diet is your good choice</string>
+    <string name="hint_height">Please enter height</string>
+    <string name="hint_weight">Please enter weight</string>
+    <string name="action_settings">Setting</string>
+    <string name="action_about">About</string>
+    <string name="report_title">BMI Report Detail</string>
+    <string name="report_back">Return</string>
+    <string name="advice_history">Last Bmi test result：</string>
+    <string name="input_empty"></string>
+    <string name="understood">understood</string>
+    <string name="about_bmi">About BMI</string>
+    <string name="about_content">Power By :Tiger</string>
+    <string name="exception">oops!!</string>
+</resources>

@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">MyBMI</string>
+    <string name="bmi_hello">哈囉!来算算看你的BMI吧</string>
+    <string name="bmi_height">身高 (cm)</string>
+    <string name="bmi_weight">体重 (kg)</string>
+    <string name="bmi_btn">计算BMI值</string>
+    <string name="bmi_result">你的BMI值是</string>
+    <string name="press_setting">按下設定</string>
+    <string name="thinking">到底想怎樣</string>
+    <string name="advice_light">你该多吃点</string>
+    <string name="advice_average">体型很棒喔!</string>
+    <string name="advice_heavy">你该节食囉</string>
+    <string name="hint_height">请输入身高</string>
+    <string name="hint_weight">请输入体重</string>
+    <string name="action_settings">设定</string>
+    <string name="action_about">关于</string>
+    <string name="report_title">BMI报告清单</string>
+    <string name="report_back">返回上一页</string>
+    <string name="advice_history">上次测试结果：</string>
+    <string name="input_empty"></string>
+    <string name="understood">我了解了</string>
+    <string name="about_bmi">關於Android BMI</string>
+    <string name="about_content">感謝開發人員:Tiger 努力協助!!</string>
+    <string name="exception">要先輸入身高體重喔!</string>
+</resources>

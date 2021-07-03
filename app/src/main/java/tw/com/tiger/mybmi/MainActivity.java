@@ -151,8 +151,8 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_settings:
-                Toast.makeText(this, "按下設定", Toast.LENGTH_SHORT).show();
-                Toast.makeText(this, "到底想怎樣??", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.press_setting) , Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.thinking), Toast.LENGTH_SHORT).show();
                 break;
             case R.id.action_about:
                 //Toast.makeText(this, "按下設定", Toast.LENGTH_SHORT).show();
@@ -171,13 +171,13 @@ public class MainActivity extends AppCompatActivity {
     private void openOptionsDialog()
     {
         new AlertDialog.Builder(this)
-            .setTitle("關於Android BMI")
-            .setMessage("感謝開發人員:Tiger 努力協助!!")
+            .setTitle(getString(R.string.about_bmi))
+            .setMessage(getString(R.string.about_content))
             .setPositiveButton("OK",
                  new DialogInterface.OnClickListener() {
                      @Override
                      public void onClick(DialogInterface dialog, int which) {
-                         Toast.makeText(MainActivity.this, "我了解了",Toast.LENGTH_SHORT).show();
+                         Toast.makeText(MainActivity.this, getString(R.string.understood),Toast.LENGTH_SHORT).show();
                      }
                  })
             .show();
