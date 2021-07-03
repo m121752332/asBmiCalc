@@ -3,7 +3,7 @@
 
 - [x] constraintlayout布局
 - [x] Android Activity Result APIs 使用ActivityResultLauncher API傳遞資料
-- [ ] 可自行多語系切換(未來提供)
+- [x] 可自行多語系切換(繁體,簡體,英文)
 - [ ] 將記錄存入SQLLITE(未來提供)
 
 # 圖片內容介紹
