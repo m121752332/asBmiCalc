@@ -5,8 +5,12 @@
         android:orderInCategory="100"
         android:title="@string/action_settings"
         app:showAsAction="never" />
+    <item android:id="@+id/clean_db"
+        android:orderInCategory="200"
+        android:title="@string/clean_db"
+        app:showAsAction="never" />
     <item android:id="@+id/action_about"
-        android:orderInCategory="100"
+        android:orderInCategory="300"
         android:title="@string/action_about"
         app:showAsAction="never" />
 </menu>

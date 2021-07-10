@@ -10,6 +10,8 @@
     <string name="thinking">到底想怎樣</string>
     <string name="about_bmi">關於Android BMI</string>
     <string name="about_content">感謝開發人員:Tiger 努力協助!!</string>
+    <string name="clean_db">清掉BMI紀錄</string>
+    <string name="clean_show">清除完畢，目前筆數:</string>
     <string name="understood">我了解了</string>
     <string name="exception">要先輸入身高體重喔!</string>
     <string name="advice_light">你該多吃點</string>

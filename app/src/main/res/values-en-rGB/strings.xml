@@ -23,4 +23,6 @@
     <string name="about_bmi">About BMI</string>
     <string name="about_content">Power By :Tiger</string>
     <string name="exception">oops!!</string>
+    <string name="clean_db">Clean Bmi Log</string>
+    <string name="clean_show">Clean log and record=</string>
 </resources>

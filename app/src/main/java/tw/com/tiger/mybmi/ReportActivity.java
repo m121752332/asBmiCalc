@@ -11,11 +11,16 @@ import android.widget.Toast;
 
 import java.text.DecimalFormat;
 
+import tw.com.tiger.mybmi.database.BmiDataBase;
+import tw.com.tiger.mybmi.database.model.BmiLog;
+
 public class ReportActivity extends AppCompatActivity {
     private Button button_back;
     private TextView show_result;
     private TextView show_suggest;
-    private double BMI;
+    private double BMI_NUM;
+    private BmiDataBase bmiDatabase;
+    private BmiLog bmi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +37,7 @@ public class ReportActivity extends AppCompatActivity {
         button_back = (Button)findViewById(R.id.button);
         show_result = (TextView)findViewById(R.id.result);
         show_suggest = (TextView)findViewById(R.id.suggest);
+        bmiDatabase = BmiDataBase.getInstance(ReportActivity.this);
     }
 
     private void showResults()
@@ -46,16 +52,16 @@ public class ReportActivity extends AppCompatActivity {
             //體重
             double weight = Double.parseDouble(bundle.getString("KEY_WEIGHT"));
             //計算出BMI值
-            BMI = weight / (height*height);
+            BMI_NUM = weight / (height*height);
 
             //結果
-            show_result.setText(getText(R.string.bmi_result) +" "+ nf.format(BMI));
+            show_result.setText(getText(R.string.bmi_result) +" "+ nf.format(BMI_NUM));
             //Toast.makeText(ReportActivity.this, "BMI:"+BMI, Toast.LENGTH_SHORT).show();
 
             //建議
-            if(BMI > 25) //太重了
+            if(BMI_NUM > 25) //太重了
                 show_suggest.setText(R.string.advice_heavy);
-            else if(BMI < 20) //太輕了
+            else if(BMI_NUM < 20) //太輕了
                 show_suggest.setText(R.string.advice_light);
             else //剛剛好
                 show_suggest.setText(R.string.advice_average);
@@ -68,6 +74,7 @@ public class ReportActivity extends AppCompatActivity {
 
     private void setListensers()
     {
+        //返回按鈕，包裝後產生LOG到MyBMI.db
         button_back.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,12 +83,25 @@ public class ReportActivity extends AppCompatActivity {
                 Intent intent = new Intent();
                 //Bundle bundle = new Bundle();
                 //bundle.putString("BMI", nf.format(BMI));
-                intent.putExtra("BMI",BMI);
+                intent.putExtra("BMI",BMI_NUM);
+
+                new Thread(() -> {
+                    bmi = new BmiLog(BMI_NUM);
+                    bmiDatabase.getBmiDao().insertData(bmi);
+                }).start();
                 //Toast.makeText(ReportActivity.this, "BMI:"+BMI, Toast.LENGTH_SHORT).show();
                 setResult(RESULT_OK, intent);
                 //結束報告Class
                 ReportActivity.this.finish();
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        //關閉資料庫
+        bmiDatabase.cleanUp();
+        //關主程式
+        super.onDestroy();
     }
 }

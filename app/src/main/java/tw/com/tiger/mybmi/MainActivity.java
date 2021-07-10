@@ -21,7 +21,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.stetho.Stetho;
+
 import java.text.DecimalFormat;
+import java.util.List;
+
+import tw.com.tiger.mybmi.database.BmiDataBase;
+import tw.com.tiger.mybmi.database.model.BmiLog;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,6 +37,11 @@ public class MainActivity extends AppCompatActivity {
     private EditText num_weight;
     private TextView show_result;
     private TextView show_suggest;
+    private BmiDataBase bmiDatabase;
+    private BmiLog bmi;
+    private List<BmiLog> bmiLogs;
+    private Double maxBmi;
+    private int BmiCount;
 
     ActivityResultLauncher launcher = registerForActivityResult(new ResultContract(), new ActivityResultCallback<String>() {
         @Override
@@ -42,16 +53,19 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.w("Main", "開始事件");
+        Log.i("Main", "開始事件");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Stetho.initializeWithDefaults(this);//設置資料庫監視
 
         //初始化控制項
         initViews();
-        //初始化資料
-        initData();
+        //打開資料庫
+        displayList();
         //設定監聽事件
         setListeners();
+        //初始化資料
+        initData();
     }
 
     private void initViews()
@@ -65,6 +79,13 @@ public class MainActivity extends AppCompatActivity {
 
     private void initData()
     {
+        DecimalFormat nf = new DecimalFormat("0.00");
+        new Thread(() -> {
+            maxBmi = bmiDatabase.getBmiDao().displayMaxBmi(bmiDatabase.getBmiDao().getMax());
+            if (maxBmi>0) {
+                show_suggest.setText(getString(R.string.advice_history) + nf.format(maxBmi));
+            }
+        }).start();
     }
 
     private void setListeners()
@@ -94,6 +115,20 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private void displayList() {
+        bmiDatabase = BmiDataBase.getInstance(MainActivity.this);
+        new Thread(() -> {
+            bmiLogs = bmiDatabase.getBmiDao().displayAll();
+        }).start();
+
+
+
+        //new Thread(() -> {
+        //    int count = bmiDatabase.getBmiDao().getCount();
+        //    callToast("Bmi log record=" + count);
+        //});
+    }
+
     @Deprecated
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent)
@@ -106,7 +141,11 @@ public class MainActivity extends AppCompatActivity {
             {
                 Bundle bundle = intent.getExtras();
                 String bmi = bundle.getString("BMI");
-                show_suggest.setText(getString(R.string.advice_history) + bmi);
+                //show_suggest.setText(getString(R.string.advice_history) + bmi);
+                maxBmi = bmiDatabase.getBmiDao().displayMaxBmi(bmiDatabase.getBmiDao().getMax());
+                DecimalFormat nf = new DecimalFormat("0.00");
+                show_suggest.setText(getString(R.string.advice_history) + nf.format(maxBmi));
+
                 num_weight.setText(R.string.input_empty);
                 num_weight.requestFocus();
             }
@@ -158,11 +197,30 @@ public class MainActivity extends AppCompatActivity {
                 //Toast.makeText(this, "按下設定", Toast.LENGTH_SHORT).show();
                 openOptionsDialog();
                 break;
+            case R.id.clean_db:
+                //Toast.makeText(this, "按下設定", Toast.LENGTH_SHORT).show();
+                cleanDataLog();
+                break;
             default:
 
         }
         //return true;
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * 關於說明
+     */
+    private void cleanDataLog()
+    {
+        new Thread(() -> {
+            //bmiLogs = bmiDatabase.getBmiDao().displayAll();
+            bmiDatabase.getBmiDao().deleteDatas();
+            BmiCount = bmiDatabase.getBmiDao().getCount();
+        }).start();
+        show_suggest.setText(R.string.input_empty);
+        String msg = getText(R.string.clean_show)+String.valueOf(BmiCount);
+        callToast(msg);
     }
 
     /**
@@ -177,9 +235,17 @@ public class MainActivity extends AppCompatActivity {
                  new DialogInterface.OnClickListener() {
                      @Override
                      public void onClick(DialogInterface dialog, int which) {
-                         Toast.makeText(MainActivity.this, getString(R.string.understood),Toast.LENGTH_SHORT).show();
+                         callToast(R.string.understood);
                      }
                  })
             .show();
+    }
+
+    private void callToast(int id){
+        Toast.makeText(this, getString(id), Toast.LENGTH_LONG).show();
+    }
+
+    private void callToast(String msg){
+        Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
     }
 }
