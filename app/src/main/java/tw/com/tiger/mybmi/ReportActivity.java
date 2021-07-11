@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,11 +17,15 @@ import tw.com.tiger.mybmi.database.model.BmiLog;
 
 public class ReportActivity extends AppCompatActivity {
     private Button button_back;
+    private ImageView btn_return;
     private TextView show_result;
     private TextView show_suggest;
     private double BMI_NUM;
     private BmiDataBase bmiDatabase;
     private BmiLog bmi;
+
+    public ReportActivity() {
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,9 +39,10 @@ public class ReportActivity extends AppCompatActivity {
 
     private void initViews()
     {
-        button_back = (Button)findViewById(R.id.button);
-        show_result = (TextView)findViewById(R.id.result);
-        show_suggest = (TextView)findViewById(R.id.suggest);
+        //button_back = (Button)findViewById(R.id.button);
+        btn_return = findViewById(R.id.btn_return);
+        show_result = findViewById(R.id.result);
+        show_suggest = findViewById(R.id.suggest);
         bmiDatabase = BmiDataBase.getInstance(ReportActivity.this);
     }
 
@@ -75,7 +81,7 @@ public class ReportActivity extends AppCompatActivity {
     private void setListensers()
     {
         //返回按鈕，包裝後產生LOG到MyBMI.db
-        button_back.setOnClickListener(new Button.OnClickListener() {
+        btn_return.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DecimalFormat nf = new DecimalFormat("0.00");
