@@ -1,4 +1,4 @@
-# PMI 計算器
+# BMI 計算器
 幫助簡易入門設計APP來應用與使用
 
 - [x] constraintlayout布局
